@@ -9,3 +9,5 @@ int *getStartDrawPos(int roomNum);
 void tokenizeRoom(char *item, int roomNum);
 void drawRoomElements(char *element, int roomNum);
 int *getItemLoc(char *element);
+char getRogueChar(char item);
+void removeNewLine(char string[150]);

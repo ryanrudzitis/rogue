@@ -5,7 +5,6 @@
 int main(int argc, char const *argv[])
 {
     FILE *fp = NULL;
-    int room = 0;
     char buffer[150];
     char roomElements[150];
     char *roomSize;
@@ -16,24 +15,24 @@ int main(int argc, char const *argv[])
 
     fp = openFile((char*)argv[1], "r");
 
-    // initscr();
+    initscr();
 
     /*Draws rooms and items*/
     while (fgets(buffer, 150, fp)) {
+        removeNewLine(buffer);
         strcpy(roomElements, strchr(buffer, ' '));
-        roomSize =  strtok(buffer, " "); // get the room size
+        roomSize = strtok(buffer, " "); // get the room size
         size = getRoomSize(roomSize, i); // convert room size to int pointer
-        // drawRoom(size, i); // draw the room
-        free(size);
+        drawRoom(size, i); // draw the room
         tokenizeRoom(roomElements, i);
         i++;
+        free(size);
     }
 
     getch();
-    // endwin();
+    endwin();
 
     return 0;
 error:
-    endwin();
     return -1;
 }

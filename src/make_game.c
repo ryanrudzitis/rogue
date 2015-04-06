@@ -5,8 +5,6 @@
 int *getRoomSize(char *size, int roomNum) { // rows x columns
     int rows, col;
     char strRow[5], strCol[5];
-    char buffer[10];
-    int i;
     int *roomSize = malloc(sizeof(int) * 2);
 
     check(roomNum < 7 && roomNum > 0, "Invalid room to be drawn"); // check if room is valid
@@ -106,17 +104,25 @@ void tokenizeRoom(char *item, int roomNum) {
 }
 
 void drawRoomElements(char *element, int roomNum) {
-    char rogueChar;
     char item;
     int *pos;
-    char *location;
+    int row, col;
+    int placeRow, placeCol;
 
     if (element[0] != 'd') {
         item = element[0];
+        item = getRogueChar(item);
         pos = getItemLoc(element);
 
+        placeRow = getStartDrawPos(roomNum)[0] + pos[0];
+        placeCol = getStartDrawPos(roomNum)[1] + pos[1];
 
+        move(placeRow, placeCol);
+        getyx(stdscr, row, col);
 
+        if (mvinch(row, col) == '.') {
+            mvaddch(placeRow, placeCol, item);
+        }
 
     } else {
         // call door function
@@ -130,7 +136,7 @@ int *getItemLoc(char *element) {
     char *tempRow, *tempCol;
 
     for (i = 0; i < strlen(element); i++) {
-        element[i] = element[i+1];
+        element[i] = element[i + 1];
     }
 
     element[strlen(element)] = '\0';
@@ -144,4 +150,43 @@ int *getItemLoc(char *element) {
     free(buffer);
     return loc;
 
+}
+
+char getRogueChar(char item) {
+    char rogueChar = '\0';
+
+    switch (item) {
+    case 'h':
+        rogueChar = '@';
+        break;
+    case 'g':
+        rogueChar = '*';
+        break;
+    case 'w':
+        rogueChar = ')';
+        break;
+    case 'p':
+        rogueChar = '!';
+        break;
+    case 'm':
+        rogueChar = '?';
+        break;
+    case 's':
+        rogueChar = '%';
+        break;
+    default:
+        rogueChar = item;
+        break;
+    }
+
+    return rogueChar;
+}
+
+void removeNewLine(char string[150]) {
+    int i;
+    for (i = 0; i < strlen(string); i++) {
+        if (string[i] == '\n') {
+            string[i] = '\0';
+        }
+    }
 }
