@@ -26,9 +26,9 @@ int main(int argc, char const *argv[])
         drawRoom(size, i); // draw the room
         tokenizeRoom(roomElements, i); // draw the elements
         i++;
+        free(size);
     }
 
-    free(size);
     fclose(fp);
     getch();
     endwin();
