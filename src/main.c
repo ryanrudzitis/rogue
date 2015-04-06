@@ -22,13 +22,14 @@ int main(int argc, char const *argv[])
         removeNewLine(buffer);
         strcpy(roomElements, strchr(buffer, ' '));
         roomSize = strtok(buffer, " "); // get the room size
-        size = getRoomSize(roomSize, i); // convert room size to int pointer
+        size     = getRoomSize(roomSize, i); // convert room size to int pointer
         drawRoom(size, i); // draw the room
-        tokenizeRoom(roomElements, i);
+        tokenizeRoom(roomElements, i); // draw the elements
         i++;
         free(size);
     }
 
+    fclose(fp);
     getch();
     endwin();
 

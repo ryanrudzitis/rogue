@@ -104,23 +104,29 @@ void tokenizeRoom(char *item, int roomNum) {
 }
 
 void drawRoomElements(char *element, int roomNum) {
-    char item;
-    int *pos;
-    int placeRow, placeCol;
+    char item = '\0';
+    int *pos = NULL;
+    int *placePos = NULL;
+    int placeRow = 0, placeCol = 0;
 
     if (element[0] != 'd') {
         item = element[0];
         item = getRogueChar(item);
         pos = getItemLoc(element);
 
-        placeRow = getStartDrawPos(roomNum)[0] + pos[0];
-        placeCol = getStartDrawPos(roomNum)[1] + pos[1];
+        placePos = getStartDrawPos(roomNum);
+        placeRow = placePos[0] + pos[0];
+        placeCol = placePos[1] + pos[1];
 
         if (mvinch(placeRow, placeCol) == '.') mvaddch(placeRow, placeCol, item);
 
     } else {
         // call door function
     }
+
+    free(pos);
+    free(placePos);
+    findHero();
 }
 
 int *getItemLoc(char *element) {
@@ -181,6 +187,16 @@ void removeNewLine(char string[150]) {
     for (i = 0; i < strlen(string); i++) {
         if (string[i] == '\n') {
             string[i] = '\0';
+        }
+    }
+}
+
+void findHero() {
+    int i, j;
+
+    for (i = 0; i < 80; i++) {
+        for (j = 0; j < 80; j++) {
+            if (mvinch(i, j) == '@') return;
         }
     }
 }

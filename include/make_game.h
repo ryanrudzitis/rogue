@@ -11,3 +11,4 @@ void drawRoomElements(char *element, int roomNum);
 int *getItemLoc(char *element);
 char getRogueChar(char item);
 void removeNewLine(char string[150]);
+void findHero();
