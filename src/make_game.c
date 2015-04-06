@@ -56,9 +56,11 @@ void drawRoom(int *size, int roomNum) {
     free(startPos);
 }
 
+/*Gets starting drawing position for each room*/
 int *getStartDrawPos(int roomNum) {
     int *pos = malloc(sizeof(int) * 2);
 
+    /*Switch these below*/
     switch (roomNum) {
     case 1:
         pos[1] = 1;
@@ -89,4 +91,57 @@ int *getStartDrawPos(int roomNum) {
     }
 
     return pos;
+}
+
+/*Tokenizes the room line, sends buffer to get drawn*/
+void tokenizeRoom(char *item, int roomNum) {
+    char *buffer = malloc(sizeof(char) * 150);
+    char *saved;
+
+    for (buffer = strtok_r(item, " ", &saved); buffer; buffer = strtok_r(NULL, " ", &saved)) {
+        drawRoomElements(buffer, roomNum);
+    }
+
+    free(buffer);
+}
+
+void drawRoomElements(char *element, int roomNum) {
+    char rogueChar;
+    char item;
+    int *pos;
+    char *location;
+
+    if (element[0] != 'd') {
+        item = element[0];
+        pos = getItemLoc(element);
+
+
+
+
+    } else {
+        // call door function
+    }
+}
+
+int *getItemLoc(char *element) {
+    int *loc = malloc(sizeof(int) * 2);
+    char *buffer = malloc(sizeof(char) * 5);
+    int i;
+    char *tempRow, *tempCol;
+
+    for (i = 0; i < strlen(element); i++) {
+        element[i] = element[i+1];
+    }
+
+    element[strlen(element)] = '\0';
+
+    tempRow = strtok(element, ",");
+    tempCol = strtok(NULL, ",");
+
+    loc[0] = atoi(tempRow);
+    loc[1] = atoi(tempCol);
+
+    free(buffer);
+    return loc;
+
 }
