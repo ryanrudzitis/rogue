@@ -106,7 +106,6 @@ void tokenizeRoom(char *item, int roomNum) {
 void drawRoomElements(char *element, int roomNum) {
     char item;
     int *pos;
-    int row, col;
     int placeRow, placeCol;
 
     if (element[0] != 'd') {
@@ -117,12 +116,7 @@ void drawRoomElements(char *element, int roomNum) {
         placeRow = getStartDrawPos(roomNum)[0] + pos[0];
         placeCol = getStartDrawPos(roomNum)[1] + pos[1];
 
-        move(placeRow, placeCol);
-        getyx(stdscr, row, col);
-
-        if (mvinch(row, col) == '.') {
-            mvaddch(placeRow, placeCol, item);
-        }
+        if (mvinch(placeRow, placeCol) == '.') mvaddch(placeRow, placeCol, item);
 
     } else {
         // call door function
