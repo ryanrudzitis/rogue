@@ -1,6 +1,7 @@
 #include "filein.h"
 #include "dbg.h"
 #include "make_game.h"
+#include "input.h"
 
 int main(int argc, char const *argv[])
 {
@@ -10,12 +11,14 @@ int main(int argc, char const *argv[])
     char *roomSize;
     int i = 1;
     int *size = NULL; // does this need to be malloced?
+    char input = '\0';
 
     check(argc == 2, "Please enter two arguments");
 
     fp = openFile((char*)argv[1], "r");
 
     initscr();
+    noecho();
 
     /*Draws rooms and items*/
     while (fgets(buffer, 150, fp)) {
@@ -29,8 +32,12 @@ int main(int argc, char const *argv[])
         free(size);
     }
 
+    do {
+        input = getch();
+        getInput(input);
+    } while (input != 'q');
+
     fclose(fp);
-    getch();
     endwin();
 
     return 0;
