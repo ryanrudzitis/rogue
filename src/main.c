@@ -6,9 +6,9 @@
 int main(int argc, char const *argv[])
 {
     FILE *fp = NULL;
-    char buffer[150];
+    char buffer[150] = {0};
     char roomElements[150];
-    char *roomSize;
+    char *roomSize = NULL;
     int i = 1;
     int *size = NULL; // does this need to be malloced?
     char input = '\0';
@@ -19,6 +19,7 @@ int main(int argc, char const *argv[])
 
     initscr();
     noecho();
+
 
     /*Draws rooms and items*/
     while (fgets(buffer, 150, fp)) {
@@ -32,6 +33,7 @@ int main(int argc, char const *argv[])
         free(size);
     }
 
+    /*This is the user input loop*/
     do {
         input = getch();
         getInput(input);

@@ -3,19 +3,19 @@
 
 /*This function takes in the dimensions of the room in char, returns an int pointer*/
 int *getRoomSize(char *size, int roomNum) { // rows x columns
-    int rows, col;
+    int row, col;
     char strRow[5], strCol[5];
     int *roomSize = malloc(sizeof(int) * 2);
 
-    check(roomNum < 7 && roomNum > 0, "Invalid room to be drawn"); // check if room is valid
+    check(roomNum < 7 && roomNum > 0, "Invalid room to be drawn");
 
+    /*Convert string to int*/
     strcpy(strRow, strtok(size, "X"));
-    rows = atoi(strRow);
-
     strcpy(strCol, strtok(NULL, "X"));
+    row = atoi(strRow);
     col = atoi(strCol);
 
-    roomSize[0] = rows;
+    roomSize[0] = row;
     roomSize[1] = col;
 
     return roomSize;
@@ -61,28 +61,28 @@ int *getStartDrawPos(int roomNum) {
     /*Switch these below*/
     switch (roomNum) {
     case 1:
-        pos[1] = 1;
         pos[0] = 4;
+        pos[1] = 1;
         break;
     case 2:
-        pos[1] = 30;
         pos[0] = 4;
+        pos[1] = 30;
         break;
     case 3:
-        pos[1] = 59;
         pos[0] = 4;
+        pos[1] = 59;
         break;
     case 4:
-        pos[1] = 1;
         pos[0] = 27;
+        pos[1] = 1;
         break;
     case 5:
-        pos[1] = 30;
         pos[0] = 27;
+        pos[1] = 30;
         break;
     case 6:
-        pos[1] = 59;
         pos[0] = 27;
+        pos[1] = 59;
         break;
     default:
         break;
@@ -94,29 +94,32 @@ int *getStartDrawPos(int roomNum) {
 /*Tokenizes the room line, sends buffer to get drawn*/
 void tokenizeRoom(char *item, int roomNum) {
     char *buffer = malloc(sizeof(char) * 150);
-    char *saved;
+    char *saved = NULL;
 
+    /*Loop through each room item*/
     for (buffer = strtok_r(item, " ", &saved); buffer; buffer = strtok_r(NULL, " ", &saved)) {
         drawRoomElements(buffer, roomNum);
     }
-
     free(buffer);
+
 }
 
+/*Draws the actual room elements ie gold*/
 void drawRoomElements(char *element, int roomNum) {
     char item = '\0';
-    int *pos = NULL;
+    int *itemPos = NULL;
     int *placePos = NULL;
     int placeRow = 0, placeCol = 0;
 
     if (element[0] != 'd') {
         item = element[0];
         item = getRogueChar(item);
-        pos = getItemLoc(element);
+        itemPos = getItemLoc(element);
 
+        /*Find where to place the item*/
         placePos = getStartDrawPos(roomNum);
-        placeRow = placePos[0] + pos[0];
-        placeCol = placePos[1] + pos[1];
+        placeRow = placePos[0] + itemPos[0];
+        placeCol = placePos[1] + itemPos[1];
 
         if (mvinch(placeRow, placeCol) == '.') mvaddch(placeRow, placeCol, item);
 
@@ -124,9 +127,9 @@ void drawRoomElements(char *element, int roomNum) {
         // call door function
     }
 
-    free(pos);
+    free(itemPos);
     free(placePos);
-    findHero();
+    findHero(); // put the cursor on the hero
 }
 
 int *getItemLoc(char *element) {
