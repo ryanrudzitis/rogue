@@ -3,6 +3,7 @@
 void getInput(char input) {
     int row, col;
     int x, y;
+    char tempFloor;
 
     getyx(stdscr, row, col);
     getyx(stdscr, y, x);
@@ -30,6 +31,9 @@ void getInput(char input) {
     }
 
     if (mvinch(y, x) != '|' && mvinch(y, x) != '-') {
+        mvaddch(row, col, '.');
+        mvaddch(y, x, '@');
+        move(y, x);
         return;
     } else {
         move(row, col);
