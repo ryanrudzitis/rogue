@@ -6,8 +6,8 @@
 int main(int argc, char const *argv[])
 {
     FILE *fp = NULL;
-    char buffer[150] = {0};
-    char roomElements[150];
+    char *buffer = malloc(sizeof(char) * 150);
+    char roomElements[150] = {0};
     char *roomSize = NULL;
     int i = 1;
     int *size = NULL; // does this need to be malloced?
@@ -19,7 +19,6 @@ int main(int argc, char const *argv[])
 
     initscr();
     noecho();
-
 
     /*Draws rooms and items*/
     while (fgets(buffer, 150, fp)) {
@@ -39,6 +38,7 @@ int main(int argc, char const *argv[])
         getInput(input);
     } while (input != 'q');
 
+    free(buffer);
     fclose(fp);
     endwin();
 

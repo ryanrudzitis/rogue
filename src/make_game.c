@@ -93,15 +93,13 @@ int *getStartDrawPos(int roomNum) {
 
 /*Tokenizes the room line, sends buffer to get drawn*/
 void tokenizeRoom(char *item, int roomNum) {
-    char *buffer = malloc(sizeof(char) * 150);
+    char *buffer = NULL;
     char *saved = NULL;
 
     /*Loop through each room item*/
     for (buffer = strtok_r(item, " ", &saved); buffer; buffer = strtok_r(NULL, " ", &saved)) {
         drawRoomElements(buffer, roomNum);
     }
-    free(buffer);
-
 }
 
 /*Draws the actual room elements ie gold*/
