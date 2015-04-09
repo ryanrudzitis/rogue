@@ -2,7 +2,7 @@
 #include "dbg.h"
 
 FILE *openFile(char *file, char *mode) {
-    FILE *fp = malloc(sizeof(FILE));
+    FILE *fp = NULL;
 
     fp = fopen(file, mode);
 

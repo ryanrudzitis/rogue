@@ -7,7 +7,7 @@ int main(int argc, char const *argv[])
 {
     FILE *fp = NULL;
     char *buffer = malloc(sizeof(char) * 150);
-    char roomElements[150] = {0};
+    char roomElements[300] = {0};
     char *roomSize = NULL;
     int i = 1;
     int *size = NULL; // does this need to be malloced?
@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
         removeNewLine(buffer);
         strcpy(roomElements, strchr(buffer, ' '));
         roomSize = strtok(buffer, " "); // get the room size
-        size     = getRoomSize(roomSize, i); // convert room size to int pointer
+        size = getRoomSize(roomSize, i); // convert room size to int pointer
         drawRoom(size, i); // draw the room
         tokenizeRoom(roomElements, i); // draw the elements
         i++;

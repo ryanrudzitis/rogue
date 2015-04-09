@@ -4,16 +4,16 @@
 /*This function takes in the dimensions of the room in char, returns an int pointer*/
 int *getRoomSize(char *size, int roomNum) { // rows x columns
     int row, col;
-    char strRow[5], strCol[5];
     int *roomSize = malloc(sizeof(int) * 2);
+    char *tempBfr = NULL;
 
     check(roomNum < 7 && roomNum > 0, "Invalid room to be drawn");
 
     /*Convert string to int*/
-    strcpy(strRow, strtok(size, "X"));
-    strcpy(strCol, strtok(NULL, "X"));
-    row = atoi(strRow);
-    col = atoi(strCol);
+    tempBfr = strtok(size, "X");
+    row = atoi(tempBfr);
+    tempBfr = strtok(NULL, "X");
+    col = atoi(tempBfr);
 
     roomSize[0] = row;
     roomSize[1] = col;
